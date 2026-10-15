@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
      0. TIKTOK STYLE WELCOME INTRO ENGINE
      ============================================================ */
   const welcomeIntro = document.getElementById("welcomeIntro");
+  const welcomeEnterBtn = document.getElementById("welcomeEnterBtn");
   let isWelcomeDismissed = false;
 
   function dismissWelcomeIntro() {
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     welcomeIntro.classList.add("hide-intro");
 
     // Tự động kích hoạt nhạc nền nếu chưa phát
-    if (!isAudioPlaying) {
+    if (!isAudioPlaying && !userManuallyPaused) {
       startAudioPlayback();
     }
 
@@ -31,21 +32,31 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (welcomeIntro) {
-    // 1. Nhấp hoặc chạm bất kỳ đâu để vào ngay và bật nhạc
-    welcomeIntro.addEventListener("click", () => {
-      dismissWelcomeIntro();
-    });
-
-    welcomeIntro.addEventListener("touchstart", () => {
-      dismissWelcomeIntro();
-    }, { passive: true });
-
-    // 2. Tự động chuyển vào trang sau 3.8s (giống video TikTok để xem trọn vẹn intro)
+    // Tự động chuyển vào trang sau 3.8s (giống video TikTok để xem trọn vẹn intro)
     const autoDismissTimer = setTimeout(() => {
       dismissWelcomeIntro();
     }, 3800);
 
-    // 3. Phím Enter hoặc Space
+    // 1. Nhấp hoặc chạm bất kỳ đâu để vào ngay và bật nhạc
+    welcomeIntro.addEventListener("click", () => {
+      clearTimeout(autoDismissTimer);
+      dismissWelcomeIntro();
+    });
+
+    welcomeIntro.addEventListener("touchend", () => {
+      clearTimeout(autoDismissTimer);
+      dismissWelcomeIntro();
+    }, { passive: true });
+
+    if (welcomeEnterBtn) {
+      welcomeEnterBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        clearTimeout(autoDismissTimer);
+        dismissWelcomeIntro();
+      });
+    }
+
+    // 2. Phím Enter hoặc Space
     window.addEventListener("keydown", (e) => {
       if (!isWelcomeDismissed && (e.key === "Enter" || e.key === " " || e.key === "Escape")) {
         clearTimeout(autoDismissTimer);
@@ -209,6 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicStatus = document.getElementById("musicStatus");
 
   let isAudioPlaying = false;
+  let userManuallyPaused = false;
 
   if (audio) {
     audio.loop = true; // Luôn luôn lặp lại khi hết nhạc
@@ -217,27 +229,32 @@ document.addEventListener("DOMContentLoaded", () => {
   function setPlayerPlayingState(playing) {
     isAudioPlaying = playing;
     if (playing) {
-      musicCapsule.classList.add("music-playing");
-      iconPlay.style.display = "none";
-      iconPause.style.display = "block";
-      musicStatus.textContent = "Đang phát";
-      musicStatus.style.color = "#ffffff";
+      if (musicCapsule) musicCapsule.classList.add("music-playing");
+      if (iconPlay) iconPlay.style.display = "none";
+      if (iconPause) iconPause.style.display = "block";
+      if (musicStatus) {
+        musicStatus.textContent = "Đang phát";
+        musicStatus.style.color = "#ffffff";
+      }
     } else {
-      musicCapsule.classList.remove("music-playing");
-      iconPlay.style.display = "block";
-      iconPause.style.display = "none";
-      musicStatus.textContent = "Tạm dừng";
-      musicStatus.style.color = "#94a3b8";
+      if (musicCapsule) musicCapsule.classList.remove("music-playing");
+      if (iconPlay) iconPlay.style.display = "block";
+      if (iconPause) iconPause.style.display = "none";
+      if (musicStatus) {
+        musicStatus.textContent = "Tạm dừng";
+        musicStatus.style.color = "#94a3b8";
+      }
     }
   }
 
   async function startAudioPlayback() {
-    if (!audio) return;
+    if (!audio || userManuallyPaused) return;
     try {
       await audio.play();
       setPlayerPlayingState(true);
+      removeGlobalUnlockListeners();
     } catch (err) {
-      // Khi trình duyệt chặn lúc chưa có tương tác
+      // Khi trình duyệt (Chrome/Cốc Cốc) chặn autoplay lúc mới mở tab chưa có tương tác
       setPlayerPlayingState(false);
     }
   }
@@ -245,25 +262,54 @@ document.addEventListener("DOMContentLoaded", () => {
   function pauseAudioPlayback() {
     if (!audio) return;
     audio.pause();
+    userManuallyPaused = true;
     setPlayerPlayingState(false);
   }
 
-  // Tự động phát ngay khi vừa load vào trang
+  // 1. Thử tự động phát ngay khi vừa load vào trang
   startAudioPlayback();
+  window.addEventListener("load", () => {
+    if (!isAudioPlaying && !userManuallyPaused) {
+      startAudioPlayback();
+    }
+  });
 
-  // Nút bật / tắt nhạc duy nhất trên thanh điều khiển
+  // 2. Cơ chế mở khóa thông minh: Khi trình duyệt chặn autoplay không có tương tác,
+  // chỉ cần người dùng chạm vào màn hình (click, scroll, touch, keydown), nhạc sẽ phát ngay!
+  const unlockEvents = ["click", "pointerdown", "touchstart", "touchend", "keydown", "scroll", "wheel"];
+
+  function handleFirstInteraction() {
+    if (!isAudioPlaying && !userManuallyPaused) {
+      startAudioPlayback();
+    }
+  }
+
+  function removeGlobalUnlockListeners() {
+    unlockEvents.forEach((evt) => {
+      window.removeEventListener(evt, handleFirstInteraction, { capture: true });
+      document.removeEventListener(evt, handleFirstInteraction, { capture: true });
+    });
+  }
+
+  unlockEvents.forEach((evt) => {
+    window.addEventListener(evt, handleFirstInteraction, { capture: true, passive: true });
+    document.addEventListener(evt, handleFirstInteraction, { capture: true, passive: true });
+  });
+
+  // 3. Nút bật / tắt nhạc duy nhất trên thanh điều khiển
   if (musicToggleBtn) {
     musicToggleBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       if (isAudioPlaying) {
         pauseAudioPlayback();
       } else {
+        userManuallyPaused = false;
         startAudioPlayback();
       }
     });
   }
 
-  // Dự phòng khi kết thúc nhạc: Tự động phát lại bài hát ngay lập tức
+  // 4. Dự phòng khi kết thúc nhạc: Tự động phát lại bài hát ngay lập tức
   if (audio) {
     audio.addEventListener("ended", () => {
       audio.currentTime = 0;

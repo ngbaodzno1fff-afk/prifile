@@ -56,8 +56,8 @@ Font yêu cầu: Space Grotesk & DM Mono (Google Fonts)
     </div>
 
     <!-- Bottom Capsule Tag Domain -->
-    <div class="welcome-capsule-tag" id="welcomeEnterBtn" role="button" tabindex="0">
-      <span class="capsule-domain">www.rifqi.vercel.app</span>
+    <div class="welcome-capsule-tag" id="welcomeEnterBtn" role="button" tabindex="0" title="Chạm để vào trang và bật nhạc">
+      <span class="capsule-domain">profiledevlop.netlify.app</span>
     </div>
   </div>
 </div>
