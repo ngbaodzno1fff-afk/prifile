@@ -6,6 +6,20 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+  // ✦ TELEGRAM MINI APP INTEGRATION
+  if (window.Telegram && window.Telegram.WebApp) {
+    try {
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand();
+      if (window.Telegram.WebApp.setHeaderColor) {
+        window.Telegram.WebApp.setHeaderColor("#000000");
+      }
+      if (window.Telegram.WebApp.setBackgroundColor) {
+        window.Telegram.WebApp.setBackgroundColor("#000000");
+      }
+    } catch (e) {}
+  }
+
   /* ============================================================
      0. TIKTOK STYLE WELCOME INTRO ENGINE
      ============================================================ */
