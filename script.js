@@ -13,12 +13,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const welcomeEnterBtn = document.getElementById("welcomeEnterBtn");
   let isWelcomeDismissed = false;
 
+  // Khóa cuộn màn hình và ẩn nội dung bên dưới khi Welcome Intro đang chạy
+  if (welcomeIntro) {
+    document.body.classList.add("intro-active");
+  }
+
   function dismissWelcomeIntro() {
     if (isWelcomeDismissed || !welcomeIntro) return;
     isWelcomeDismissed = true;
 
     // Kích hoạt animation slide-up rời đi
     welcomeIntro.classList.add("hide-intro");
+
+    // Mở khóa cuộn màn hình và hiển thị trang chính
+    document.body.classList.remove("intro-active");
 
     // Tự động kích hoạt nhạc nền nếu chưa phát
     if (!isAudioPlaying && !userManuallyPaused) {
