@@ -1,0 +1,365 @@
+================================================================================
+TIKTOK STYLE WELCOME INTRO SCREEN - SOURCE CODE
+================================================================================
+Phong cách: Obsidian Monochrome Black, 3 Circular Icons, Kinetic Typography
+Trích xuất từ video TikTok: https://vt.tiktok.com/ZSg1wmbKf/
+Font yêu cầu: Space Grotesk & DM Mono (Google Fonts)
+================================================================================
+
+<!-- NHÚNG FONT VÀO THẺ <head> -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+
+================================================================================
+1. PHẦN HTML (Đặt ngay sau thẻ <body>)
+================================================================================
+
+<!-- ================= WELCOME INTRO SCREEN (PHONG CÁCH TIKTOK) ================= -->
+<div id="welcomeIntro" class="welcome-intro-screen" aria-label="Màn hình chào mừng">
+  <!-- Lưới đáy & Hào quang mờ monochrome -->
+  <div class="welcome-ambient-grid" aria-hidden="true"></div>
+  <div class="welcome-ambient-glow" aria-hidden="true"></div>
+
+  <div class="welcome-content">
+    <!-- Hàng 3 Icon tròn tối giản: Code, User, Globe -->
+    <div class="welcome-icons-row">
+      <div class="welcome-icon-pill icon-code" title="Developer Code">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6"></polyline>
+          <polyline points="8 6 2 12 8 18"></polyline>
+        </svg>
+      </div>
+      <div class="welcome-icon-pill icon-user" title="Team Profile">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+      </div>
+      <div class="welcome-icon-pill icon-globe" title="Global Network">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Tiêu đề Kinetic Typography -->
+    <div class="welcome-text-group">
+      <div class="welcome-row-split">
+        <span class="welcome-word word-welcome">Welcome</span>
+        <span class="welcome-word word-to">to my</span>
+      </div>
+      <h1 class="welcome-title">Portfolio Website</h1>
+    </div>
+
+    <!-- Bottom Capsule Tag Domain -->
+    <div class="welcome-capsule-tag" id="welcomeEnterBtn" role="button" tabindex="0">
+      <span class="capsule-domain">www.rifqi.vercel.app</span>
+    </div>
+  </div>
+</div>
+
+
+================================================================================
+2. PHẦN CSS (Dán vào file style.css hoặc thẻ <style>)
+================================================================================
+
+/* ================= TIKTOK WELCOME SCREEN ================= */
+.welcome-intro-screen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000000;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: transform 0.85s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.65s ease, filter 0.65s ease;
+}
+
+/* Hiệu ứng trượt vút lên trên khi mở vào trang */
+.welcome-intro-screen.hide-intro {
+  transform: translateY(-100%);
+  opacity: 0;
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+/* Lưới Cyber mờ ảo ở đáy màn hình */
+.welcome-ambient-grid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 280px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Ánh sáng trắng bạc vi mô ở đáy */
+.welcome-ambient-glow {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 160px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.06) 0%, transparent 70%);
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+/* Container trung tâm Welcome */
+.welcome-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 460px;
+  animation: welcomeFadeIn 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes welcomeFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* 1. Hàng 3 icon tròn phía trên (Code, User, Globe) */
+.welcome-icons-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.welcome-icon-pill {
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transform: scale(0.3) rotate(-140deg) translateY(60px);
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+
+.welcome-icon-pill svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Pop-in so le mượt mà */
+.welcome-icon-pill.icon-code {
+  animation: iconPopIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards, iconFloat 3.8s ease-in-out infinite alternate 1.6s;
+}
+
+.welcome-icon-pill.icon-user {
+  animation: iconPopIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards, iconFloat 3.8s ease-in-out infinite alternate 1.85s;
+}
+
+.welcome-icon-pill.icon-globe {
+  animation: iconPopIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.65s forwards, iconFloat 3.8s ease-in-out infinite alternate 2.1s;
+}
+
+@keyframes iconPopIn {
+  0% { opacity: 0; transform: scale(0.3) rotate(-140deg) translateY(60px); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg) translateY(0); }
+}
+
+@keyframes iconFloat {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(1.5deg); }
+  100% { transform: translateY(0) rotate(-1.5deg); }
+}
+
+.welcome-intro-screen:hover .welcome-icon-pill {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* 2. Tiêu đề Kinetic Typography (Welcome to my / Portfolio Website) */
+.welcome-text-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #ffffff;
+}
+
+.welcome-row-split {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  overflow: hidden;
+  padding: 2px 0;
+}
+
+.welcome-word {
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  display: inline-block;
+  opacity: 0;
+  filter: blur(12px);
+}
+
+.word-welcome {
+  transform: translateX(120px);
+  animation: wordSlideLeft 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1s forwards;
+}
+
+.word-to {
+  transform: translateX(-120px);
+  animation: wordSlideRight 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1.25s forwards;
+}
+
+@keyframes wordSlideLeft {
+  0% { opacity: 0; transform: translateX(120px); filter: blur(12px); }
+  100% { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+
+@keyframes wordSlideRight {
+  0% { opacity: 0; transform: translateX(-120px); filter: blur(12px); }
+  100% { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+
+.welcome-title {
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: #ffffff;
+  text-align: center;
+  white-space: nowrap;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(60px);
+  filter: blur(12px);
+  animation: titleSlideUp 1.4s cubic-bezier(0.22, 1, 0.36, 1) 1.5s forwards;
+}
+
+@keyframes titleSlideUp {
+  0% { opacity: 0; transform: translateY(60px); filter: blur(12px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* 3. Capsule Pill Tag (www.rifqi.vercel.app) */
+.welcome-capsule-tag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 18px;
+  margin-top: 4px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 0;
+  transform: translateY(-35px);
+  filter: blur(8px);
+  animation: tagSlideIn 1.3s cubic-bezier(0.22, 1, 0.36, 1) 1.8s forwards;
+  transition: all 0.3s ease;
+}
+
+@keyframes tagSlideIn {
+  0% { opacity: 0; transform: translateY(-35px); filter: blur(8px); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.capsule-domain {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: #a1a1aa;
+}
+
+.welcome-capsule-tag:hover {
+  transform: scale(1.05) translateY(-2px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+
+================================================================================
+3. PHẦN JAVASCRIPT (Dán vào file script.js hoặc thẻ <script>)
+================================================================================
+
+/* ================= TIKTOK WELCOME INTRO ENGINE ================= */
+const welcomeIntro = document.getElementById("welcomeIntro");
+let isWelcomeDismissed = false;
+
+function dismissWelcomeIntro() {
+  if (isWelcomeDismissed || !welcomeIntro) return;
+  isWelcomeDismissed = true;
+
+  // Kích hoạt animation trượt vút lên trên
+  welcomeIntro.classList.add("hide-intro");
+
+  // Tự động kích hoạt âm thanh (nếu có hàm phát nhạc)
+  if (typeof startAudioPlayback === "function" && !isAudioPlaying) {
+    startAudioPlayback();
+  }
+
+  // Gỡ bỏ hoàn toàn sau hiệu ứng transition 0.85s
+  setTimeout(() => {
+    welcomeIntro.style.display = "none";
+  }, 850);
+}
+
+if (welcomeIntro) {
+  // 1. Nhấp hoặc chạm bất kỳ đâu để vào ngay và mở nhạc
+  welcomeIntro.addEventListener("click", () => {
+    dismissWelcomeIntro();
+  });
+
+  welcomeIntro.addEventListener("touchstart", () => {
+    dismissWelcomeIntro();
+  }, { passive: true });
+
+  // 2. Tự động trượt lên vào trang sau 3.8s (đủ thời gian xem trọn animation)
+  const autoDismissTimer = setTimeout(() => {
+    dismissWelcomeIntro();
+  }, 3800);
+
+  // 3. Hỗ trợ bấm phím Enter hoặc Space để vào trang
+  window.addEventListener("keydown", (e) => {
+    if (!isWelcomeDismissed && (e.key === "Enter" || e.key === " " || e.key === "Escape")) {
+      clearTimeout(autoDismissTimer);
+      dismissWelcomeIntro();
+    }
+  });
+}

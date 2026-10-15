@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>CYBER ROSTER • Reyna Discord Edition</title>
+  
+  <!-- SEO & Social Meta -->
+  <meta name="description" content="Trang thông tin Team Developer phong cách Đen Bóng Cyberpunk & Discord Reyna Avatar Decoration." />
+  <meta property="og:title" content="CYBER ROSTER • Reyna Discord Edition" />
+  <meta property="og:description" content="Đội ngũ phát triển phần mềm - Liên hệ Zalo chính thức." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#030206" />
+
+  <!-- Premium Google Fonts: Space Grotesk (Modern Display), Plus Jakarta Sans (Clean Body/UI), DM Mono (Aesthetic Coder/Tech) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ================= WELCOME INTRO SCREEN (PHONG CÁCH TIKTOK) ================= -->
+  <div id="welcomeIntro" class="welcome-intro-screen" aria-label="Màn hình chào mừng">
+    <!-- Bottom Grid & Ambient Glow matching TikTok intro -->
+    <div class="welcome-ambient-grid" aria-hidden="true"></div>
+    <div class="welcome-ambient-glow" aria-hidden="true"></div>
+
+    <div class="welcome-content">
+      <!-- Top 3 Circular Icon Pills (Code, User, Globe) -->
+      <div class="welcome-icons-row">
+        <div class="welcome-icon-pill icon-code" title="Developer Code">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </div>
+        <div class="welcome-icon-pill icon-user" title="Team Profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <div class="welcome-icon-pill icon-globe" title="Global Network">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Kinetic Typography Headline -->
+      <div class="welcome-text-group">
+        <div class="welcome-row-split">
+          <span class="welcome-word word-welcome">Welcome</span>
+          <span class="welcome-word word-to">to my</span>
+        </div>
+        <h1 class="welcome-title">Portfolio Website</h1>
+      </div>
+
+      <!-- Bottom Capsule Tag -->
+      <div class="welcome-capsule-tag" id="welcomeEnterBtn" role="button" tabindex="0">
+        <span class="capsule-domain">www.rifqi.vercel.app</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Cyber Code Streams Canvas (Hiệu ứng dòng code di chuyển như coder) -->
+  <canvas id="cyberCanvas" class="cyber-canvas" aria-hidden="true"></canvas>
+
+  <!-- Nền Đen Bóng (Glossy Ambient Overlay) -->
+  <div class="glossy-overlay" aria-hidden="true">
+    <div class="spotlight spotlight-1"></div>
+    <div class="spotlight spotlight-2"></div>
+    <div class="grid-mesh"></div>
+  </div>
+
+  <!-- Audio Element (Autoplay & Loop liên tục) -->
+  <audio id="bgAudio" src="assets/music.mp3" loop preload="auto"></audio>
+
+  <!-- Floating Glossy Music Controller -->
+  <aside class="music-capsule" id="musicCapsule" aria-label="Bộ điều khiển nhạc">
+    <div class="capsule-glass-shine"></div>
+    <div class="music-meta">
+      <div class="equalizer" id="equalizer">
+        <span class="bar bar-1"></span>
+        <span class="bar bar-2"></span>
+        <span class="bar bar-3"></span>
+        <span class="bar bar-4"></span>
+        <span class="bar bar-5"></span>
+      </div>
+      <div class="music-label">
+        <span class="status-tag" id="musicStatus">Nhạc Nền</span>
+        <span class="track-title">9rfjvr • Audio Loop</span>
+      </div>
+    </div>
+    
+    <button class="music-btn" id="musicToggleBtn" type="button" aria-label="Bật/Tắt nhạc" title="Bật/Tắt âm thanh">
+      <svg class="icon-play" id="iconPlay" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8 5v14l11-7z" />
+      </svg>
+      <svg class="icon-pause" id="iconPause" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+      </svg>
+    </button>
+  </aside>
+
+  <!-- Main Viewport -->
+  <main class="page-viewport">
+
+    <!-- Header Hero Style matching TikTok Video -->
+    <header class="terminal-header">
+      <div class="cyber-badge">
+        <span class="pulse-core"></span>
+        <span class="badge-code">✦ AVAILABLE FOR WORK</span>
+      </div>
+      
+      <div class="hero-title-group">
+        <h1 class="hero-title-white">Frontend &amp; App</h1>
+        <h1 class="hero-title-muted">Developers</h1>
+      </div>
+      
+      <p class="sub-caption">&lt;Codebase Architects &amp; Application Developers /&gt;<span class="blink-cursor">_</span></p>
+    </header>
+
+    <!-- Profiles Stack (Hiển thị từng hàng) -->
+    <section class="roster-stack" aria-label="Danh sách thành viên">
+
+      <!-- ================= MEMBER 1 ================= -->
+      <article class="roster-card" data-card="1">
+        <div class="card-glass-specular"></div>
+        <div class="cyber-accent-line"></div>
+
+        <!-- Bên Trái: Avatar + Khung Reyna Discord -->
+        <div class="avatar-cell">
+          <div class="avatar-frame">
+            <img src="assets/avt1.png" alt="Nguyễn Hoàng Gia Bảo" class="avatar-photo" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=GiaBao&backgroundColor=120b24';" />
+            <!-- Khung viền Reyna Discord APNG động -->
+            <img src="assets/reyna-decoration.png" alt="Discord Reyna Frame" class="reyna-frame" />
+          </div>
+          <span class="online-pip" title="Status: Online"></span>
+        </div>
+
+        <!-- Bên Phải: Tên + Role + Nút Zalo (Hàng ngang bên phải) -->
+        <div class="details-cell">
+          <div class="name-row">
+            <h2 class="coder-name">Nguyễn Hoàng Gia Bảo</h2>
+            <span class="verified-pip" title="Verified Developer">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+              </svg>
+            </span>
+          </div>
+
+          <div class="role-badge">
+            <span class="role-symbol">⚡</span>
+            <span class="role-text">Design app | developer</span>
+          </div>
+
+          <div class="btn-group">
+            <a href="https://zalo.me/84988467271" target="_blank" rel="noopener noreferrer" class="zalo-link" aria-label="Zalo Nguyễn Hoàng Gia Bảo">
+              <span class="zalo-glyph">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <circle cx="24" cy="24" r="20" fill="#0068FF" />
+                  <path d="M14 16H34V20L22 30H34V34H14V30L26 20H14V16Z" fill="white" />
+                </svg>
+              </span>
+              <span class="link-label">Zalo Liên Hệ</span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ================= MEMBER 2 ================= -->
+      <article class="roster-card" data-card="2">
+        <div class="card-glass-specular"></div>
+        <div class="cyber-accent-line"></div>
+
+        <div class="avatar-cell">
+          <div class="avatar-frame">
+            <img src="assets/avt2.png" alt="Ng Khánh Nam" class="avatar-photo" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=KhanhNam&backgroundColor=120b24';" />
+            <img src="assets/reyna-decoration.png" alt="Discord Reyna Frame" class="reyna-frame" />
+          </div>
+          <span class="online-pip" title="Status: Online"></span>
+        </div>
+
+        <div class="details-cell">
+          <div class="name-row">
+            <h2 class="coder-name">Ng Khánh Nam</h2>
+            <span class="verified-pip" title="Verified Developer">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+              </svg>
+            </span>
+          </div>
+
+          <div class="role-badge">
+            <span class="role-symbol">💻</span>
+            <span class="role-text">Developer</span>
+          </div>
+
+          <div class="btn-group">
+            <a href="https://zalo.me/84993329535" target="_blank" rel="noopener noreferrer" class="zalo-link" aria-label="Zalo Ng Khánh Nam">
+              <span class="zalo-glyph">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <circle cx="24" cy="24" r="20" fill="#0068FF" />
+                  <path d="M14 16H34V20L22 30H34V34H14V30L26 20H14V16Z" fill="white" />
+                </svg>
+              </span>
+              <span class="link-label">Zalo Liên Hệ</span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ================= MEMBER 3 ================= -->
+      <article class="roster-card" data-card="3">
+        <div class="card-glass-specular"></div>
+        <div class="cyber-accent-line"></div>
+
+        <div class="avatar-cell">
+          <div class="avatar-frame">
+            <img src="assets/avt3.png" alt="La Minh Lợi" class="avatar-photo" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=MinhLoi&backgroundColor=120b24';" />
+            <img src="assets/reyna-decoration.png" alt="Discord Reyna Frame" class="reyna-frame" />
+          </div>
+          <span class="online-pip" title="Status: Online"></span>
+        </div>
+
+        <div class="details-cell">
+          <div class="name-row">
+            <h2 class="coder-name">La Minh Lợi</h2>
+            <span class="verified-pip" title="Verified Developer">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+              </svg>
+            </span>
+          </div>
+
+          <div class="role-badge">
+            <span class="role-symbol">🔥</span>
+            <span class="role-text">Developer</span>
+          </div>
+
+          <div class="btn-group">
+            <a href="http://zalo.me/84398883233" target="_blank" rel="noopener noreferrer" class="zalo-link" aria-label="Zalo La Minh Lợi">
+              <span class="zalo-glyph">
+                <svg viewBox="0 0 48 48" fill="none">
+                  <circle cx="24" cy="24" r="20" fill="#0068FF" />
+                  <path d="M14 16H34V20L22 30H34V34H14V30L26 20H14V16Z" fill="white" />
+                </svg>
+              </span>
+              <span class="link-label">Zalo Liên Hệ</span>
+              <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- Footer Terminal Tag -->
+    <footer class="terminal-footer">
+      <div class="footer-line">
+        <span class="term-prompt">root@reyna-cyber:~$</span>
+        <span class="term-status">2026 Core Roster • All Rights Reserved</span>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Interactive JavaScript Engine -->
+  <script src="script.js"></script>
+</body>
+</html>
