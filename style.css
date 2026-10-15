@@ -993,3 +993,19 @@ body.intro-active .music-capsule {
     font-size: 26px;
   }
 }
+
+/* ================= HIDE INJECTED NETLIFY BADGE / DRAWER ================= */
+[data-netlify-drawer],
+[id*="netlify-drawer"],
+[class*="netlify-drawer"],
+.netlify-badge,
+#netlify-badge,
+iframe[src*="netlify"],
+[aria-label*="Netlify" i],
+[title*="Netlify" i] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
